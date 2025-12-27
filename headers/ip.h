@@ -4,6 +4,11 @@
 #include <cstdint>
 #include <ostream>
 
+class IP;
+
+struct IPBinaryView;
+struct IPDecimalView;
+
 class IP
 {
 private:
@@ -14,13 +19,8 @@ public:
   IP(uint8_t o1, uint8_t o2, uint8_t o3, uint8_t o4);
   IP(uint32_t full_ip);
 
-  void print_in_decimal() const;
-  void print_in_binary() const;
-
-  static void print_in_decimal(uint32_t ip);
-  static void print_in_binary(uint32_t ip);
-
-  friend std::ostream& operator<<(std::ostream& os, const IP& ip);
+  IPBinaryView to_binary() const;
+  IPDecimalView to_decimal() const;
 
   // Getters
   uint32_t get_ip() const;
@@ -30,5 +30,20 @@ public:
   // Setters
   void set_ip(uint32_t ip);
 };
+
+struct IPBinaryView
+{
+  const IP &ip;
+};
+
+struct IPDecimalView
+{
+  const IP &ip;
+};
+
+// stream operators
+std::ostream &operator<<(std::ostream &os, const IPBinaryView &view);
+std::ostream &operator<<(std::ostream &os, const IPDecimalView &view);
+std::ostream &operator<<(std::ostream &os, const IP &ip);
 
 #endif

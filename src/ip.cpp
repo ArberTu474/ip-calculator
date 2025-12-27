@@ -16,61 +16,45 @@ IP::IP(uint32_t ip) : ip(ip)
 {
 }
 
-std::ostream &operator<<(std::ostream &os, const IP &ip)
+IPBinaryView IP::to_binary() const
 {
-  os << static_cast<int>(ip.get_octet(1)) << "."
-     << static_cast<int>(ip.get_octet(2)) << "."
-     << static_cast<int>(ip.get_octet(3)) << "."
-     << static_cast<int>(ip.get_octet(4));
-  return os;
+    return IPBinaryView{*this};
 }
 
-void IP::print_in_decimal() const
+IPDecimalView IP::to_decimal() const
 {
-  uint8_t o1 = (ip >> 24) & 0b11111111;
-  uint8_t o2 = (ip >> 16) & 0b11111111;
-  uint8_t o3 = (ip >> 8) & 0b11111111;
-  uint8_t o4 = ip & 0b11111111;
-
-  printf("%u.%u.%u.%u", o1, o2, o3, o4);
+    return IPDecimalView{*this};
 }
 
-void IP::print_in_binary() const
-{
-  uint8_t o1 = (ip >> 24) & 0b11111111;
-  uint8_t o2 = (ip >> 16) & 0b11111111;
-  uint8_t o3 = (ip >> 8) & 0b11111111;
-  uint8_t o4 = ip & 0b11111111;
+#include <bitset>
 
-  printf("%s.%s.%s.%s",
-         std::bitset<8>(o1).to_string().c_str(),
-         std::bitset<8>(o2).to_string().c_str(),
-         std::bitset<8>(o3).to_string().c_str(),
-         std::bitset<8>(o4).to_string().c_str());
+std::ostream& operator<<(std::ostream& os, const IPBinaryView& view)
+{
+    uint32_t ip = view.ip.get_ip();
+
+    os << std::bitset<8>((ip >> 24) & 0xFF) << '.'
+       << std::bitset<8>((ip >> 16) & 0xFF) << '.'
+       << std::bitset<8>((ip >> 8)  & 0xFF) << '.'
+       << std::bitset<8>( ip        & 0xFF);
+
+    return os;
 }
 
-void IP::print_in_decimal(uint32_t ip)
+std::ostream& operator<<(std::ostream& os, const IPDecimalView& view)
 {
-  uint8_t o1 = (ip >> 24) & 0b11111111;
-  uint8_t o2 = (ip >> 16) & 0b11111111;
-  uint8_t o3 = (ip >> 8) & 0b11111111;
-  uint8_t o4 = ip & 0b11111111;
+    uint32_t ip = view.ip.get_ip();
 
-  printf("%u.%u.%u.%u", o1, o2, o3, o4);
+    os << ((ip >> 24) & 0xFF) << '.'
+       << ((ip >> 16) & 0xFF) << '.'
+       << ((ip >> 8)  & 0xFF) << '.'
+       << ( ip        & 0xFF);
+
+    return os;
 }
 
-void IP::print_in_binary(uint32_t ip)
+std::ostream& operator<<(std::ostream& os, const IP& ip)
 {
-  uint8_t o1 = (ip >> 24) & 0b11111111;
-  uint8_t o2 = (ip >> 16) & 0b11111111;
-  uint8_t o3 = (ip >> 8) & 0b11111111;
-  uint8_t o4 = ip & 0b11111111;
-
-  printf("%s.%s.%s.%s",
-         std::bitset<8>(o1).to_string().c_str(),
-         std::bitset<8>(o2).to_string().c_str(),
-         std::bitset<8>(o3).to_string().c_str(),
-         std::bitset<8>(o4).to_string().c_str());
+    return os << IPDecimalView{ip};
 }
 
 uint32_t IP::get_ip() const
