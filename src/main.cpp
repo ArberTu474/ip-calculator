@@ -19,19 +19,19 @@ int main()
   // Usable Hosts:   254
   // Network Class:  C
 
-  std::cout << "IP address:\t" << ip1 << "\n";
+  std::cout << "IP address:\t" << ip1 << "\t\t" << ip1.to_binary() << "\n";
 
-  std::cout << "Network ID:\t" << n.get_network_id() << "\n";
+  std::cout << "Network ID:\t" << n.get_network_id() << "\t\t" << n.get_network_id().to_binary() << "\n";
 
-  std::cout << "Broadcast:\t" << n.get_broadcast_id() << "\n";
+  std::cout << "Broadcast:\t" << n.get_broadcast_id() << "\t\t" << n.get_broadcast_id().to_binary() << "\n";
 
-  std::cout << "Subnet Mask:\t" << n.get_subnet_mask() << " (/" << n.get_prefix_length() << ")\n";
+  std::cout << "Subnet Mask:\t" << n.get_subnet_mask() << " (/" << n.get_prefix_length() << ")" << "\t" << n.get_subnet_mask().to_binary() << "\n";
 
-  std::cout << "Wildcard Mask:\t" << n.get_wildcard_mask() << "\n";
+  std::cout << "Wildcard Mask:\t" << n.get_wildcard_mask() << "\t\t" << n.get_wildcard_mask().to_binary() << "\n";
 
-  std::cout << "First Host:\t" << n.get_first_ip() << "\n";
+  std::cout << "First Host:\t" << n.get_first_ip() << "\t\t" << n.get_first_ip().to_binary() << "\n";
 
-  std::cout << "Last Host:\t" << n.get_last_ip() << "\n";
+  std::cout << "Last Host:\t" << n.get_last_ip() << "\t\t" << n.get_last_ip().to_binary() << "\n";
 
   std::cout << "Total Hosts:\t" << n.get_total_hosts() << "\n";
 
