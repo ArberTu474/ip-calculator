@@ -27,6 +27,8 @@ int main()
 
   std::cout << "Subnet Mask:\t" << n.get_subnet_mask() << " (/" << n.get_prefix_length() << ")\n";
 
+  std::cout << "Wildcard Mask:\t" << n.get_wildcard_mask() << "\n";
+
   std::cout << "First Host:\t" << n.get_first_ip() << "\n";
 
   std::cout << "Last Host:\t" << n.get_last_ip() << "\n";

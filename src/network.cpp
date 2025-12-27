@@ -17,6 +17,11 @@ IP Network::get_subnet_mask()
   return this->subnet_mask;
 }
 
+IP Network::get_wildcard_mask()
+{
+  return ~subnet_mask.get_ip();
+}
+
 IP Network::get_network_id()
 {
   // network_id = subnet_mask & ip_address
@@ -89,13 +94,13 @@ void Network::print_subnets(int subnet_bits)
   {
     std::cout << i << "\t"
               << subnet_id << "\t"
-              << (IP)(subnet_id.get_ip() + 1) << " - "                    // first usable host
-              << (IP)(subnet_id.get_ip() + number_of_hosts - 2) << "\t"   // last usable host
-              << (IP)(subnet_id.get_ip() + number_of_hosts - 1) << "\n";  // broadcast id
+              << (IP)(subnet_id.get_ip() + 1) << " - "                   // first usable host
+              << (IP)(subnet_id.get_ip() + number_of_hosts - 2) << "\t"  // last usable host
+              << (IP)(subnet_id.get_ip() + number_of_hosts - 1) << "\n"; // broadcast id
 
     // We add the subnet block size to the current subnet id to get the next one subnet id
     subnet_id.set_ip(subnet_id.get_ip() + number_of_hosts);
-    
+
     i++;
   }
 

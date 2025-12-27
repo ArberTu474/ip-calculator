@@ -16,6 +16,7 @@ public:
     // Getters
     IP get_ip();
     IP get_subnet_mask();
+    IP get_wildcard_mask();
 
     IP get_network_id();
     IP get_broadcast_id();
