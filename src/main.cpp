@@ -5,35 +5,41 @@
 int main()
 {
   IP ip1(192, 168, 1, 10);
+  IP ip2(192, 168, 2, 20);
   IP sm(255, 255, 255, 0);
-
-  ip1.print_in_decimal();
-  std::cout << "\n";
-  ip1.print_in_binary();
 
   Network n(ip1, sm);
 
-  std::cout << "\nNetwork Id: ";
-  n.get_network_id().print_in_decimal();
-  std::cout << "\n";
-  n.get_network_id().print_in_binary();
-  std::cout << "\nBroadcast Id: ";
-  n.get_broadcast_id().print_in_decimal();
+  // Network ID:     192.168.1.0
+  // Broadcast:      192.168.1.255
+  // Subnet Mask:    255.255.255.0 (/24)
+  // First Host:     192.168.1.1
+  // Last Host:      192.168.1.254
+  // Total Host:     256
+  // Usable Hosts:   254
+  // Network Class:  C
 
-  std::cout << "\nFirst Ip: ";
-  n.get_first_ip().print_in_decimal();
-  std::cout << "\nLast Ip: ";
-  n.get_last_ip().print_in_decimal();
+  std::cout << "IP address:\t" << ip1 << "\n";
 
-  std::cout << "\nTotal hosts: " << n.get_total_hosts() << "\n";
-  std::cout << "Total usable hosts: " << n.get_usable_hosts() << "\n";
+  std::cout << "Network ID:\t" << n.get_network_id() << "\n";
 
-  n.print_subnets(3);
+  std::cout << "Broadcast:\t" << n.get_broadcast_id() << "\n";
 
-  std::cout << "Ip class: " << ip1.get_ip_class() << "\n";
+  std::cout << "Subnet Mask:\t" << n.get_subnet_mask() << " (/" << n.get_prefix_length() << ")\n";
 
-  std::cout << "is ip in network: (192.168.1.40) " << n.is_ip_in_network(IP(255, 168, 3, 8)) << "\n";
-  std::cout << "Prefix length: " << n.get_prefix_length() << "\n";
+  std::cout << "First Host:\t" << n.get_first_ip() << "\n";
+
+  std::cout << "Last Host:\t" << n.get_last_ip() << "\n";
+
+  std::cout << "Total Hosts:\t" << n.get_total_hosts() << "\n";
+
+  std::cout << "Usable Hosts:\t" << n.get_usable_hosts() << "\n";
+
+  std::cout << "Network Class:\t" << n.get_ip().get_ip_class() << "\n";
+
+  std::cout << "Is " << ip2 << " in the network?\t" << (n.is_ip_in_network(ip2) ? "Yes" : "No") << "\n";
+
+  n.print_subnets(2);
 
   return 0;
 }

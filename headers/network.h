@@ -14,6 +14,9 @@ public:
     Network(IP ip_address, IP subnet_mask);
 
     // Getters
+    IP get_ip();
+    IP get_subnet_mask();
+
     IP get_network_id();
     IP get_broadcast_id();
     IP get_first_ip();
