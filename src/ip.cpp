@@ -18,43 +18,41 @@ IP::IP(uint32_t ip) : ip(ip)
 
 IPBinaryView IP::to_binary() const
 {
-    return IPBinaryView{*this};
+  return IPBinaryView{*this};
 }
 
 IPDecimalView IP::to_decimal() const
 {
-    return IPDecimalView{*this};
+  return IPDecimalView{*this};
 }
 
-#include <bitset>
-
-std::ostream& operator<<(std::ostream& os, const IPBinaryView& view)
+std::ostream &operator<<(std::ostream &os, const IPBinaryView &view)
 {
-    uint32_t ip = view.ip.get_ip();
+  uint32_t ip = view.ip.get_ip();
 
-    os << std::bitset<8>((ip >> 24) & 0xFF) << '.'
-       << std::bitset<8>((ip >> 16) & 0xFF) << '.'
-       << std::bitset<8>((ip >> 8)  & 0xFF) << '.'
-       << std::bitset<8>( ip        & 0xFF);
+  os << std::bitset<8>((ip >> 24) & 0xFF) << '.'
+     << std::bitset<8>((ip >> 16) & 0xFF) << '.'
+     << std::bitset<8>((ip >> 8) & 0xFF) << '.'
+     << std::bitset<8>(ip & 0xFF);
 
-    return os;
+  return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const IPDecimalView& view)
+std::ostream &operator<<(std::ostream &os, const IPDecimalView &view)
 {
-    uint32_t ip = view.ip.get_ip();
+  uint32_t ip = view.ip.get_ip();
 
-    os << ((ip >> 24) & 0xFF) << '.'
-       << ((ip >> 16) & 0xFF) << '.'
-       << ((ip >> 8)  & 0xFF) << '.'
-       << ( ip        & 0xFF);
+  os << ((ip >> 24) & 0xFF) << '.'
+     << ((ip >> 16) & 0xFF) << '.'
+     << ((ip >> 8) & 0xFF) << '.'
+     << (ip & 0xFF);
 
-    return os;
+  return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const IP& ip)
+std::ostream &operator<<(std::ostream &os, const IP &ip)
 {
-    return os << IPDecimalView{ip};
+  return os << IPDecimalView{ip};
 }
 
 uint32_t IP::get_ip() const
