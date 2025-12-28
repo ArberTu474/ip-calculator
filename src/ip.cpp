@@ -92,8 +92,8 @@ char IP::get_ip_class() const
 
 bool IP::is_private() const
 {
-  uint8_t o1 = (ip >> 24) & 0xFF;
-  uint8_t o2 = (ip >> 16) & 0xFF;
+  uint8_t o1 = this->get_octet(1);
+  uint8_t o2 = this->get_octet(2);
 
   if (o1 == 10)
     return true;
