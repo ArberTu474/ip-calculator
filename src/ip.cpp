@@ -76,7 +76,7 @@ uint8_t IP::get_octet(int octet) const
 
 char IP::get_ip_class() const
 {
-  uint8_t o1 = (ip >> 24) & 0xFF;
+  uint8_t o1 = this->get_octet(1);
 
   if ((o1 & 0b10000000) == 0)
     return 'A'; // 0xxxxxxx
