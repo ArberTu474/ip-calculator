@@ -29,6 +29,8 @@ public:
 
   // Setters
   void set_ip(uint32_t ip);
+
+  bool is_private() const;
 };
 
 struct IPBinaryView

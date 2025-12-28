@@ -41,6 +41,8 @@ int main()
 
   std::cout << "Is " << ip2 << " in the network?\t" << (n.is_ip_in_network(ip2) ? "Yes" : "No") << "\n";
 
+  std::cout << "Is network private?\t\t" << ((ip1.is_private()) ? "Yes" : "No") << "\n";
+
   n.print_subnets(2);
 
   return 0;

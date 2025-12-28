@@ -89,3 +89,20 @@ char IP::get_ip_class() const
 
   return 'E'; // 1111xxxx
 }
+
+bool IP::is_private() const
+{
+  uint8_t o1 = (ip >> 24) & 0xFF;
+  uint8_t o2 = (ip >> 16) & 0xFF;
+
+  if (o1 == 10)
+    return true;
+
+  if (o1 == 172 && o2 >= 16 && o2 <= 31)
+    return true;
+
+  if (o1 == 192 && o2 == 168)
+    return true;
+
+  return false;
+}

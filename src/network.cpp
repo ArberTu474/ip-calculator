@@ -7,46 +7,46 @@ Network::Network(IP ip_address, IP subnet_mask)
 {
 }
 
-IP Network::get_ip()
+IP Network::get_ip() const
 {
   return this->ip_address;
 }
 
-IP Network::get_subnet_mask()
+IP Network::get_subnet_mask() const
 {
   return this->subnet_mask;
 }
 
-IP Network::get_wildcard_mask()
+IP Network::get_wildcard_mask() const
 {
   return ~subnet_mask.get_ip();
 }
 
-IP Network::get_network_id()
+IP Network::get_network_id() const
 {
   // network_id = subnet_mask & ip_address
   return subnet_mask.get_ip() & ip_address.get_ip();
 }
 
-IP Network::get_broadcast_id()
+IP Network::get_broadcast_id() const
 {
   // broadcast_id = network_id | inverted subnet_mask
   return this->get_network_id().get_ip() | (~subnet_mask.get_ip());
 }
 
-IP Network::get_first_ip()
+IP Network::get_first_ip() const
 {
   // first ip comes after the network id
   return this->get_network_id().get_ip() + 1;
 }
 
-IP Network::get_last_ip()
+IP Network::get_last_ip() const
 {
   // the last ip comes before the broadcast id
   return this->get_broadcast_id().get_ip() - 1;
 }
 
-int Network::get_total_hosts()
+int Network::get_total_hosts() const
 {
   // Example
   // subnet mask:           11111111.11111111.11111111.00000000
@@ -55,7 +55,7 @@ int Network::get_total_hosts()
   return (int)~subnet_mask.get_ip() + 1;
 }
 
-int Network::get_usable_hosts()
+int Network::get_usable_hosts() const
 {
   // In the total hosts rage 2 ips are reserved for network id and broadcast id
   return this->get_total_hosts() - 2;
@@ -110,7 +110,7 @@ void Network::print_subnets(int subnet_bits)
   std::cout << "Total usable hosts:\t" << (number_of_hosts - 2) * number_of_subnets << "\n";
 }
 
-int Network::get_prefix_length()
+int Network::get_prefix_length() const
 {
   uint32_t mask = subnet_mask.get_ip();
   int count = 0;
@@ -123,7 +123,7 @@ int Network::get_prefix_length()
   return count;
 }
 
-bool Network::is_ip_in_network(IP ip)
+bool Network::is_ip_in_network(IP ip) const
 {
   // For in ip to be in a specific network it should:
   // ip & subnet_mask == network_id
