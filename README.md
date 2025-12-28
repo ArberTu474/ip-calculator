@@ -281,7 +281,7 @@ ip & subnet_mask
 
 Rezultati i `ip & subnet_mask` është i barabartë me `network_id`, pra ip `192.168.1.40` ndodhet në këtë network.
 
-#### IP::i[s_private()](https://github.com/ArberTu474/ip-calculator/blob/main/src/ip.cpp#L93-L108)
+> #### IP::i[s_private()](https://github.com/ArberTu474/ip-calculator/blob/main/src/ip.cpp#L93-L108)
 
 Klasat `A`, `B`, `C` kanë range me ip private. Tabela më poshtë paraqet këto range.
 
