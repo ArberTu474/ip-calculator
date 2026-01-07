@@ -67,7 +67,7 @@ Hosts:     252
 
 - Identifikimi i [network id](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L10)
 - Identifikimi i [broadcast id](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L31)
-- Kalkulimi i [CIDR/ prefix length](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L113)
+- Kalkulimi i [CIDR/ prefix length](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L119)
 - Afishimi i [subnet mask](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L15)
 - Afishimi i [wildcard mask](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L20)
 - Identifikimi i [first host](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L37)
@@ -76,8 +76,8 @@ Hosts:     252
 - Kalkulimi i [usable hosts](https://github.com/ArberTu474/ip-calculator/blob/main/src/netëork.cpp#L58)
 - Identifikimi i [network class](https://github.com/ArberTu474/ip-calculator/blob/main/src/ip.cpp#L77)
 - Identifikimi nëse një [ip i përket një network](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L126)
-- Identifikimi nëse një netëork është [private](https://github.com/ArberTu474/ip-calculator/blob/main/src/ip.cpp#L93)
-- Identifikimi i [subnets në bazë të subnet bits](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L64)
+- Identifikimi nëse një netëork është [private](https://github.com/ArberTu474/ip-calculator/blob/main/src/ip.cpp#L193)
+- Identifikimi i [subnets në bazë të subnet bits](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L65)
 
 ### Implementimet
 
@@ -152,7 +152,7 @@ Për të llogaritur `broadcast_id` duhet të përdorim operatorin logjik `OR` nd
 
 `broadcat_id` është ip e fundit në një network range. `wildcard_mask` përfaqëson pjesën e ip që përdoret për të identifikuar hostet, por njëkohësisht në vlerë binare korespondon me hostin e fundit në një network, që është `broadcast_id`. Prandaj `wildcard_mask` i shtohet `network_id`.
 
-#### Network::[get_prefix_length()](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L113-L124)
+#### Network::[get_prefix_length()](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L119-L130)
 
 `prefix_length` ose `CIDR` paraqet numrin e biteve që korespondojnë me `network_id`. Për të llogaritur `CIDR` mjafton të numërojmë `1` që ndodhen në `subnet_mask`.
 
@@ -263,7 +263,7 @@ char IP::get_ip_class() const
 }
 ```
 
-#### Network::[is_ip_in_network(IP ip)](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L126-L144)
+#### Network::[is_ip_in_network(IP ip)](https://github.com/ArberTu474/ip-calculator/blob/main/src/network.cpp#L132-L150)
 
 Që një ip të jetë pjesë e një network të caktuar bitet korespondues për `network_id` duhet të jenë të barabartë me `network_id`. `subnet_mask` veçon bitet për `network_id`.
 
