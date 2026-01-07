@@ -1,6 +1,7 @@
 #include "network.h"
 #include "ip.h"
 #include <iostream>
+#include <vector>
 
 Network::Network(IP ip_address, IP subnet_mask)
     : ip_address(ip_address), subnet_mask(subnet_mask)
@@ -63,19 +64,12 @@ int Network::get_usable_hosts() const
 
 void Network::print_subnets(int subnet_bits)
 {
-  // We invert the subnet mask and add 1 to get the total number of hosts
-  // We remove (shift to the right) the subnet bits and the rest of the bits give the number of hosts
+  int new_prefix = this->get_prefix_length() + subnet_bits;
 
-  // Example
-  // subnet bits:           3
-  // subnet mask:           11111111.11111111.11111111.00000000
-  // inverted subnet mask:  00000000.00000000.00000000.11111111
-  // shift the bits to the right as many as the subnet bits (3)
-  // shift 3 bits           00000000.00000000.00000000.00011111
-  // We add one to get number of hosts per subnet or subnet block size
-  int number_of_hosts = (~subnet_mask.get_ip() >> subnet_bits) + 1;
+  // To get a subnet mask with a specific prefix we get a number we 32 ones and shift it a ceratin amout of bits
+  IP new_subnet_mask = ~uint32_t(0) << (32 - new_prefix);
 
-  // We create a number filled with as many ones as the subnet bits
+  // We shift the number 1 as many times as the number of subnet_bits
   // This way we don't need to use the pow() function
 
   // Exampls
@@ -84,30 +78,42 @@ void Network::print_subnets(int subnet_bits)
   // we end up with: 00001000 = 8
   int number_of_subnets = (1 << subnet_bits);
 
+  // We invert the subnet mask and add 1 to get the total number of hosts
+  // We remove (shift to the right) the subnet bits and the rest of the bits give the number of hosts 
+  int number_of_hosts_per_subnet = (~new_subnet_mask.get_ip()) + 1;
+
+  // This vector is going to hold each subnet in the form of a Network
+  std::vector<Network> subnets;
+
   // first subnet id is equal to the network id
   IP subnet_id = this->get_network_id();
+
+  for (int i = 0; i < number_of_subnets; i++)
+  {
+    subnets.push_back(Network(subnet_id, new_subnet_mask));
+
+    // We add the subnet block size to the current subnet id to get the next one subnet id
+    subnet_id.set_ip(subnet_id.get_ip() + number_of_hosts_per_subnet);
+  }
+
   int i = 1;
 
   std::cout << "\nsubnet\tsubnet id\tusable hosts\t\t\tbroadcast id\n";
   std::cout << "---------------------------------------------------------------------\n";
-  while (i <= number_of_subnets)
+  for (auto &&subnet : subnets)
   {
     std::cout << i << "\t"
-              << subnet_id << "\t"
-              << (IP)(subnet_id.get_ip() + 1) << " - "                   // first usable host
-              << (IP)(subnet_id.get_ip() + number_of_hosts - 2) << "\t"  // last usable host
-              << (IP)(subnet_id.get_ip() + number_of_hosts - 1) << "\n"; // broadcast id
-
-    // We add the subnet block size to the current subnet id to get the next one subnet id
-    subnet_id.set_ip(subnet_id.get_ip() + number_of_hosts);
-
+              << subnet.get_network_id() << "\t"    // subnet id
+              << subnet.get_first_ip() << " - "     // first usable host
+              << subnet.get_last_ip() << "\t"       // last usable host
+              << subnet.get_broadcast_id() << "\n"; // broadcast id
     i++;
   }
 
   std::cout << "\n";
   std::cout << "Total subnets:\t\t" << number_of_subnets << "\n";
-  std::cout << "Total hosts per subnet:\t" << number_of_hosts << "\n";
-  std::cout << "Total usable hosts:\t" << (number_of_hosts - 2) * number_of_subnets << "\n";
+  std::cout << "Total hosts per subnet:\t" << number_of_hosts_per_subnet << "\n";
+  std::cout << "Total usable hosts:\t" << (number_of_hosts_per_subnet - 2) * number_of_subnets << "\n";
 }
 
 int Network::get_prefix_length() const
