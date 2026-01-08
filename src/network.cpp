@@ -79,7 +79,7 @@ void Network::print_subnets(int subnet_bits)
   int number_of_subnets = (1 << subnet_bits);
 
   // We invert the subnet mask and add 1 to get the total number of hosts
-  // We remove (shift to the right) the subnet bits and the rest of the bits give the number of hosts 
+  // We remove (shift to the right) the subnet bits and the rest of the bits give the number of hosts
   int number_of_hosts_per_subnet = (~new_subnet_mask.get_ip()) + 1;
 
   // This vector is going to hold each subnet in the form of a Network
@@ -111,9 +111,10 @@ void Network::print_subnets(int subnet_bits)
   }
 
   std::cout << "\n";
-  std::cout << "Total subnets:\t\t" << number_of_subnets << "\n";
-  std::cout << "Total hosts per subnet:\t" << number_of_hosts_per_subnet << "\n";
-  std::cout << "Total usable hosts:\t" << (number_of_hosts_per_subnet - 2) * number_of_subnets << "\n";
+  std::cout << "Total subnets:\t\t\t" << number_of_subnets << "\n";
+  std::cout << "Total hosts per subnet:'t\t" << number_of_hosts_per_subnet << "\n";
+  std::cout << "Total usable hosts per subnet:\t" << number_of_hosts_per_subnet - 2 << "\n";
+  std::cout << "Total usable hosts:\t\t" << (number_of_hosts_per_subnet - 2) * number_of_subnets << "\n";
 }
 
 int Network::get_prefix_length() const
